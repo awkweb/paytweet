@@ -1,22 +1,24 @@
-import React, { Component } from 'react'
-import logo from './logo.svg'
-import './App.css'
-import api from './api'
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-class App extends Component {
-    onClickSubscribe = () => {
-        api.subscribe({ username: 'tomfme' })
-            .then(res => console.log(res))
-            .catch(err => console.error(err))
-    }
+import HomePage from "./HomePage.js";
+import CreatorPage from "./CreatorPage.js";
+import SubscribePage from "./SubscribePage.js";
 
-    render() {
-        return (
-            <div className="App">
-                <button onClick={this.onClickSubscribe}>subscribe</button>
-            </div>
-        )
-    }
+import "./App.css";
+
+class App extends React.Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/creator" component={CreatorPage} />
+          <Route exact path="/:creatorUsername" component={SubscribePage} />
+        </Switch>
+      </Router>
+    );
+  }
 }
 
-export default App
+export default App;
