@@ -1,16 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import SignIn from './SignIn'
 import goprivate from './images/goprivate.png'
 
 class CreatorPage extends React.Component {
     state = {
         amount: 5,
+        signedIn: false,
         step: 1,
         username: null,
     }
 
-    onClickSignInWithTwitter = () => {
-        this.setState({ step: 2 })
+    handleSignIn = user => {
+        console.log(user)
+        this.setState({ signedIn: true, step: 2 })
     }
 
     onChangeAmount = e => {
@@ -37,9 +40,7 @@ class CreatorPage extends React.Component {
             stepMarkup = (
                 <div>
                     <h3>Step 1/3. Sign in with Twitter</h3>
-                    <button onClick={this.onClickSignInWithTwitter}>
-                        Sign in with Twitter
-                    </button>
+                    <SignIn onSignIn={this.handleSignIn} />
                 </div>
             )
         } else if (step === 2) {
@@ -89,7 +90,7 @@ class CreatorPage extends React.Component {
                     <p>
                         Here's your unique subscription link:
                         <Link to={`/${username}`}>
-                            https://paytweetb.firebaseapp.com/
+                            https://paytweetb.firebaseapp.com/@
                             {username}
                         </Link>
                     </p>
