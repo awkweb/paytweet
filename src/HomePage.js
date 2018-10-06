@@ -1,22 +1,30 @@
-import React from "react";
+import React from 'react'
 
-import api from "./api";
+import api from './api'
 
 class HomePage extends React.Component {
-  onClickSubscribe = () => {
-    api
-      .subscribe({ username: "tomfme" })
-      .then(res => console.log(res))
-      .catch(err => console.error(err));
-  };
+    state = {
+        message: '',
+    }
 
-  render() {
-    return (
-      <div>
-        <button onClick={this.onClickSubscribe}>subscribe</button>
-      </div>
-    );
-  }
+    onClickSubscribe = async () => {
+        try {
+            const { message } = await api.subscribe({ username: 'tomfme' })
+            this.setState({ message })
+        } catch (e) {
+            this.setState({ message: 'error' })
+        }
+    }
+
+    render() {
+        const { message } = this.state
+        return (
+            <div>
+                <button onClick={this.onClickSubscribe}>subscribe</button>
+                {message}
+            </div>
+        )
+    }
 }
 
-export default HomePage;
+export default HomePage

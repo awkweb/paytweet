@@ -1,16 +1,35 @@
 const functions = require('firebase-functions')
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
+const cors = require('cors')({
+    origin: true,
+})
 
 exports.createPlan = functions.https.onRequest((request, response) => {
-    response.send('Hello from Firebase!')
+    return cors(request, response, () => {
+        response.status(200).send({
+            message: 'Hello from Firebase!',
+        })
+    })
 })
 
 exports.subscribe = functions.https.onRequest((request, response) => {
-    console.log(request.body)
-    const { twitter, stripe } = functions.config()
-    const { twitterKey, twitterSecret } = twitter
-    const { stripeKey } = stripe
-    response.send('Hello from Firebase!')
+    if (
+        request.method === 'GET' ||
+        request.method === 'PUT' ||
+        request.method === 'DELETE'
+    ) {
+        return response.status(403).send('Forbidden!')
+    }
+    return cors(request, response, () => {
+        // access body data
+        // const data = request.body
+
+        // access firebase config
+        // const { twitter, stripe } = functions.config()
+        // const { twitterKey, twitterSecret } = twitter
+        // const { stripeKey } = stripe
+
+        response.status(200).send({
+            message: 'subscribe success!',
+        })
+    })
 })
