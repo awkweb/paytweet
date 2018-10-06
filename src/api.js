@@ -6,6 +6,11 @@ const URL =
         : `http://localhost:5000/${PROJECT_ID}/${REGION}`
 
 export default {
+    getUserInfo(username) {
+        return fetch(`${URL}/getUserInfo?username=${username}`, {
+            method: 'GET',
+        }).then(response => response.json())
+    },
     createPlan(data) {
         return fetch(`${URL}/createPlan`, {
             method: 'POST',
