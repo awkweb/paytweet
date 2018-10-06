@@ -113,7 +113,7 @@ class SubscribePage extends React.Component {
 
         return (
             <div>
-                <h1 className="sub__header">Subscribe to {username}</h1>
+                <h1 className="sub__header">Subscribe to {username} tweets</h1>
                 <div className="sub__flex">
                     <img
                         className="sub__image"
