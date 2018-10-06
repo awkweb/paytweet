@@ -202,18 +202,13 @@ html {
 }
 
 .sub__button:hover {
-<<<<<<< HEAD
-    background-color: #E6ECF0;
+  background-color: #e6ecf0;
 }
 
 .success {
-    font-size: 1.15rem;
+  font-size: 1.15rem;
 }
 
 .success a {
-    color: #006dbf;
+  color: #006dbf;
 }
-=======
-  background-color: #e6ecf0;
-}
->>>>>>> ff2c570dd7968a5a0570a71dd12b371f8cfdecb1
