@@ -13,7 +13,7 @@ class CreatorPage extends React.Component {
     }
 
     handleSignIn = user => {
-        console.log(user.additionalUserInfo)
+        // console.log(user)
         this.setState({ signedIn: true, step: 2 })
     }
 
