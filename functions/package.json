@@ -1,0 +1,20 @@
+{
+  "name": "paytweet",
+  "description": "Cloud Functions for PayTweet",
+  "scripts": {
+    "serve": "firebase serve --only functions",
+    "shell": "cross-env NODE_ENV=development firebase experimental:functions:shell",
+    "start": "yarn run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "firebase-admin": "~5.4.2",
+    "firebase-functions": "^0.7.1"
+  },
+  "private": true,
+  "devDependencies": {
+    "campaign-terminal": "^1.0.3",
+    "cross-env": "^5.1.3"
+  }
+}
