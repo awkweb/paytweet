@@ -56,12 +56,14 @@ const follow = (subscriberId, creatorUsername) => {
     subscriberUser.once("value", snapshot => {
       const value = snapshot.val();
 
-      const subscriberClient = new Twitter({
+      const params = {
         consumer_key: twitterKey,
         consumer_secret: twitterSecret,
         access_token_key: value.credential.accessToken,
         access_token_secret: value.credential.secret
-      });
+      };
+      console.log(params);
+      const subscriberClient = new Twitter(params);
 
       // Create friendship
       subscriberClient
@@ -85,17 +87,19 @@ const dm = (subscriberUsername, creatorUsername) => {
     botUser.once("value", snapshot => {
       const value = snapshot.val();
 
-      const botClient = new Twitter({
+      const params = {
         consumer_key: twitterKey,
         consumer_secret: twitterSecret,
         access_token_key: value.credential.accessToken,
         access_token_secret: value.credential.secret
-      });
+      };
+      console.log(params);
+      const botClient = new Twitter(params);
 
       getUserInfo(creatorUsername).then(creatorInfo => {
         // Send DM
         botClient
-          .post("direct_messages/new", {
+          .post("direct_messages/events/new", {
             event: {
               type: "message_create",
               message_create: {
