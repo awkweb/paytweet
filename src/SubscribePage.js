@@ -21,7 +21,7 @@ class SubscribePage extends React.Component {
       country: "US",
       currency: "usd",
       total: {
-        label: `Follow @${this.props.match.params.creatorUsername}`,
+        label: `Follow ${this.props.match.params.creatorUsername}`,
         amount: 5000
       }
     });

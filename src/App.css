@@ -1,203 +1,206 @@
 html {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 16px;
 }
 
 .home {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 100vh;
-    margin: 0 auto;
-    max-width: 60rem;
-    text-rendering: optimizeLegibility;
-    width: 100vw;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 60rem;
+  text-rendering: optimizeLegibility;
+  width: 100vw;
 }
 
 .home__header {
-    font-size: 2rem;
-    margin: 0;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .home__description {
-    font-size: 1.25rem;
+  font-size: 1.25rem;
 }
 
 .home__button {
-    background-color: #1BA1F1;
-    color: #fff;
-    cursor: pointer;
-    border: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 8rem;
-    margin-top: 3rem;
-    max-width: 10rem;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    text-decoration: none;
-    text-align: center;
+  background-color: #1ba1f1;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8rem;
+  margin-top: 3rem;
+  max-width: 10rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  text-decoration: none;
+  text-align: center;
 }
 
 .home__button:hover {
-    background-color: #006dbf;
+  background-color: #006dbf;
 }
 
 .creator,
 .subscriber {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    margin: 5rem auto 0;
-    max-width: 40rem;
-    width: 100vw;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 5rem auto 0;
+  max-width: 40rem;
+  width: 100vw;
 }
 
 .creator__container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .firebaseui-container {
-    margin: 0 !important;
-    max-width: fit-content !important;
+  margin: 0 !important;
+  max-width: fit-content !important;
 }
 
 .firebaseui-card-content {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .mdl-button {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    padding-bottom: 1rem !important;
-    padding-top: 1rem !important;
-    font-size: 20px !important;
-    font-weight: 600 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding-bottom: 1rem !important;
+  padding-top: 1rem !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
 }
 
 .image {
-    margin-top: -2rem;
-    margin-bottom: 3rem;
-    height: auto;
-    width: 100%;
+  margin-top: -2rem;
+  margin-bottom: 3rem;
+  height: auto;
+  width: 100%;
 }
 
 .meter {
-    background-color: #E6ECF0;
-    display: flex;
-    height: 1.5rem;
-    margin-bottom: 3rem;
-    width: 100%
+  background-color: #e6ecf0;
+  display: flex;
+  height: 1.5rem;
+  margin-bottom: 3rem;
+  width: 100%;
 }
 
 .meter__progress {
-    background-color: #1BA1F1;
-    height: 1.5rem;
+  background-color: #1ba1f1;
+  height: 1.5rem;
 }
 
 .step__header {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0;
 }
 
 .step__info {
-    color: #657786;
-    font-size: 1.15rem;
-    margin-bottom: 4rem;
-    margin-top: 0;
-    line-height: 1.75rem;
+  color: #657786;
+  font-size: 1.15rem;
+  margin-bottom: 4rem;
+  margin-top: 0;
+  line-height: 1.75rem;
 }
 
 .step__info a {
-    color: #657786;
-    white-space: nowrap;
+  color: #657786;
+  white-space: nowrap;
 }
 
 .step__info .dark {
-    color: #000;
+  color: #000;
 }
 
 .step__input {
-    font-size: 1.25rem;
-    font-weight: 600;
-    max-width: 10rem;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    text-align: right;
+  font-size: 1.25rem;
+  font-weight: 600;
+  max-width: 10rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  text-align: right;
 }
 
 .creator__button {
-    background-color: #E5E5E5;
-    color: #000;
-    cursor: pointer;
-    border: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    max-width: 10rem;
-    outline: 0;
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    text-decoration: none;
-    text-align: center;
+  background-color: #e5e5e5;
+  color: #000;
+  cursor: pointer;
+  border: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  max-width: 10rem;
+  outline: 0;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  text-decoration: none;
+  text-align: center;
 }
 
 .creator__button:hover {
-    background-color: #E6ECF0;
+  background-color: #e6ecf0;
 }
 
 .sub__header {
-    font-size: 2rem;
-    margin-bottom: 3rem;
-    margin-top: 0;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  margin-top: 0;
 }
 
 .sub__image {
-    border-radius: 50%;
-    max-width: 10rem;
-    min-width: 10rem;
-    max-height: 10rem;
-    min-height: 10rem;
-    margin-right: 3rem;
+  border-radius: 50%;
+  max-width: 10rem;
+  min-width: 10rem;
+  max-height: 10rem;
+  min-height: 10rem;
+  margin-right: 3rem;
 }
 
 .sub__flex {
-    align-items: center;
-    display: flex;
-    margin-bottom: 4rem;
+  align-items: center;
+  display: flex;
+  margin-bottom: 4rem;
 }
 
 .sub__info {
-    color: #111;
-    font-size: 1.15rem;
-    margin-top: 0;
-    line-height: 1.75rem;
+  color: #111;
+  font-size: 1.15rem;
+  margin-top: 0;
+  line-height: 1.75rem;
 }
 
 .sub__card {
-    border: 1px solid lightgray;
-    font-size: 1.25rem;
-    padding: 1rem;
+  border: 1px solid lightgray;
+  font-size: 1.25rem;
+  padding: 1rem;
 }
 
 .sub__button {
-    background-color: #E5E5E5;
-    color: #000;
-    cursor: pointer;
-    border: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    max-width: 15rem;
-    margin-top: 2rem;
-    outline: 0;
-    padding: 1rem;
-    text-decoration: none;
-    text-align: center;
+  min-width: 100%;
+  background-color: #e5e5e5;
+  color: #000;
+  cursor: pointer;
+  border: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  max-width: 15rem;
+  margin-top: 2rem;
+  outline: 0;
+  padding: 1rem;
+  text-decoration: none;
+  text-align: center;
 }
 
 .sub__button:hover {
-    background-color: #E6ECF0;
+  background-color: #e6ecf0;
 }
