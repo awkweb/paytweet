@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .firebase
+.runtimeconfig.json
+paytweetb-cab06e2c419a.json

@@ -1,7 +1,10 @@
 const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp(functions.config().firebase);
 const cors = require("cors")({
   origin: process.env.NODE_ENV === "production" ? "true" : "*"
 });
+const twitter = require("twitter");
 
 exports.createPlan = functions.https.onRequest((request, response) => {
   return cors(request, response, () => {
@@ -24,10 +27,17 @@ exports.subscribe = functions.https.onRequest((request, response) => {
       source,
       subscriber: subscriberId,
       creator: creatorUsername
-    } = request.body;
+    } = JSON.parse(request.body);
 
     const { twitterKey, twitterSecret } = functions.config().twitter;
     const { stripeKey } = functions.config().stripe;
+
+    const subscriberUser = admin.database().ref(`users/${subscriberId}`);
+    console.log(subscriberUser);
+    subscriberUser.once("value", snapshot => {
+      const value = snapshot.val();
+      console.log(value);
+    });
 
     // TODO: Make subscription
 
