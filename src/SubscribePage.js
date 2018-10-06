@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "./setupFirebase";
 import {
   injectStripe,
   PaymentRequestButtonElement,
@@ -53,6 +54,7 @@ class SubscribePage extends React.Component {
           api
             .subscribe({
               source: source.id,
+              subscriber: firebase.auth().currentUser.uid,
               creator: this.props.match.params.creatorUsername
             })
             .then(response => {
@@ -70,6 +72,7 @@ class SubscribePage extends React.Component {
     api
       .subscribe({
         source: paymentResponse.source.id,
+        subscriber: firebase.auth().currentUser.uid,
         creator: this.props.match.params.creatorUsername
       })
       .then(response => {

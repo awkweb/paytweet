@@ -20,13 +20,20 @@ exports.subscribe = functions.https.onRequest((request, response) => {
     return response.status(403).send("Forbidden!");
   }
   return cors(request, response, () => {
-    // access body data
-    // const data = request.body
+    const {
+      source,
+      subscriber: subscriberId,
+      creator: creatorUsername
+    } = request.body;
 
-    // access firebase config
-    // const { twitter, stripe } = functions.config()
-    // const { twitterKey, twitterSecret } = twitter
-    // const { stripeKey } = stripe
+    const { twitterKey, twitterSecret } = functions.config().twitter;
+    const { stripeKey } = functions.config().stripe;
+
+    // TODO: Make subscription
+
+    // Create friendship
+
+    // Send DM to creator
 
     response.status(200).send({
       message: "subscribe success!"
