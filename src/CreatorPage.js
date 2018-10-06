@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SignIn from './SignIn'
+import api from './api'
 import goprivate from './images/goprivate.png'
 
 class CreatorPage extends React.Component {
@@ -12,7 +13,7 @@ class CreatorPage extends React.Component {
     }
 
     handleSignIn = user => {
-        console.log(user)
+        console.log(user.additionalUserInfo)
         this.setState({ signedIn: true, step: 2 })
     }
 
@@ -29,7 +30,9 @@ class CreatorPage extends React.Component {
         this.setState({ step: step - 1 })
     }
 
-    onClickFinish = () => {
+    onClickFinish = async () => {
+        const { username } = this.state
+        const res = await api.createPlan({ username })
         this.setState({ step: 4 })
     }
 

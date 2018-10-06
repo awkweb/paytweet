@@ -3,9 +3,15 @@ const PROJECT_ID = 'paytweetb'
 const URL =
     process.env.NODE_ENV === 'production'
         ? `https://${REGION}-${PROJECT_ID}.cloudfunctions.net`
-        : `http://localhost:5001/${PROJECT_ID}/${REGION}`
+        : `http://localhost:5000/${PROJECT_ID}/${REGION}`
 
 export default {
+    createPlan(data) {
+        return fetch(`${URL}/createPlan`, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }).then(response => response.json())
+    },
     subscribe(data) {
         return fetch(`${URL}/subscribe`, {
             method: 'POST',

@@ -18,7 +18,10 @@ class SignIn extends React.Component {
         signInOptions: [firebase.auth.TwitterAuthProvider.PROVIDER_ID],
         callbacks: {
             // Avoid redirects after sign-in.
-            signInSuccessWithAuthResult: () => false,
+            signInSuccessWithAuthResult: authResult => {
+                this.props.onSignIn(authResult)
+                return false
+            },
         },
     }
 
