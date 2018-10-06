@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 admin.initializeApp(functions.config().firebase)
 const cors = require('cors')({
-    origin: process.env.NODE_ENV === 'production' ? 'true' : '*',
+    origin: process.env.NODE_ENV === 'production' ? true : '*',
 })
 const twitter = require('twitter')
 

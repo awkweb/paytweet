@@ -105,29 +105,11 @@ class SubscribePage extends React.Component {
         })
     }
 
-    render() {
-        const { match } = this.props
-        const username = match.params.creatorUsername
-
-        if (!(username && username.length > 1 && username.startsWith('@'))) {
-            return <div>404 Not Found</div>
-        }
-
-        if (!this.state.signedIn) {
-            return (
-                <div>
-                    <h1>Subscribe to {username}</h1>
-                    <SignIn onSignIn={this.handleSignIn} />
-                </div>
-            )
-        }
-
-        if (!this.state.user) {
-            return <div>loading...</div>
-        }
-
+    renderUserInfo = () => {
         const { user } = this.state
         const profileImageUrl = user.profile_image_url.replace('_normal', '')
+        const { match } = this.props
+        const username = match.params.creatorUsername
 
         return (
             <div>
@@ -136,16 +118,46 @@ class SubscribePage extends React.Component {
                 <div>{user.description}</div>
                 <div>followers: {user.followers_count}</div>
                 <p>$5/mo</p>
-                {this.state.canMakePayment ? (
-                    <div>
-                        <PaymentRequestButtonElement />
-                        <p>Or, fill in details below:</p>
-                    </div>
-                ) : null}
-                <form onSubmit={this.handleCardPayment}>
-                    <CardElement />
-                    <button type="submit">Subscribe Now</button>
-                </form>
+            </div>
+        )
+    }
+
+    render() {
+        const { match } = this.props
+        const username = match.params.creatorUsername
+
+        if (!(username && username.length > 1 && username.startsWith('@'))) {
+            return <div>404 Not Found</div>
+        }
+
+        if (!this.state.user) {
+            return <div>loading...</div>
+        }
+
+        let stepMarkup
+        if (!this.state.signedIn) {
+            stepMarkup = <SignIn onSignIn={this.handleSignIn} />
+        } else {
+            stepMarkup = (
+                <div>
+                    {this.state.canMakePayment ? (
+                        <div>
+                            <PaymentRequestButtonElement />
+                            <p>Or, fill in details below:</p>
+                        </div>
+                    ) : null}
+                    <form onSubmit={this.handleCardPayment}>
+                        <CardElement />
+                        <button type="submit">Subscribe Now</button>
+                    </form>
+                </div>
+            )
+        }
+
+        return (
+            <div>
+                {this.renderUserInfo()}
+                {stepMarkup}
             </div>
         )
     }
