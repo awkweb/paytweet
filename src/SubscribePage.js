@@ -13,11 +13,9 @@ class SubscribePage extends React.Component {
     constructor(props) {
         super(props)
 
-        const username = api
-            .getUserInfo(props.match.params.creatorUsername)
-            .then(response => {
-                this.setState({ user: response })
-            })
+        api.getUserInfo(props.match.params.creatorUsername).then(response => {
+            this.setState({ user: response })
+        })
 
         const paymentRequest = props.stripe.paymentRequest({
             country: 'US',
@@ -113,11 +111,21 @@ class SubscribePage extends React.Component {
 
         return (
             <div>
-                <h1>Subscribe to {username}</h1>
-                <img src={profileImageUrl} />
-                <div>{user.description}</div>
-                <div>followers: {user.followers_count}</div>
-                <p>$5/mo</p>
+                <h1 className="sub__header">Subscribe to {username}</h1>
+                <div className="sub__flex">
+                    <img
+                        className="sub__image"
+                        alt="userimage"
+                        src={profileImageUrl}
+                    />
+                    <p className="sub__info">
+                        Join {user.followers_count} other subscribers for $5 per
+                        month.
+                        <br />
+                        <br />
+                        {user.description}
+                    </p>
+                </div>
             </div>
         )
     }
@@ -147,15 +155,19 @@ class SubscribePage extends React.Component {
                         </div>
                     ) : null}
                     <form onSubmit={this.handleCardPayment}>
-                        <CardElement />
-                        <button type="submit">Subscribe Now</button>
+                        <div className="sub__card">
+                            <CardElement />
+                        </div>
+                        <button className="sub__button" type="submit">
+                            Subscribe Now
+                        </button>
                     </form>
                 </div>
             )
         }
 
         return (
-            <div>
+            <div className="subscriber">
                 {this.renderUserInfo()}
                 {stepMarkup}
             </div>

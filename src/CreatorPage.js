@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SignIn from './SignIn'
-import api from './api'
+// import api from './api'
 import goprivate from './images/goprivate.png'
 
 class CreatorPage extends React.Component {
@@ -12,8 +12,8 @@ class CreatorPage extends React.Component {
         username: null,
     }
 
-    handleSignIn = user => {
-        this.setState({ signedIn: true, step: 2 })
+    handleSignIn = username => {
+        this.setState({ signedIn: true, step: 2, username })
     }
 
     onChangeAmount = e => {
@@ -30,8 +30,8 @@ class CreatorPage extends React.Component {
     }
 
     onClickFinish = async () => {
-        const { username } = this.state
-        const res = await api.createPlan({ username })
+        // const { username } = this.state
+        // const res = await api.createPlan({ username })
         this.setState({ step: 4 })
     }
 
@@ -40,31 +40,64 @@ class CreatorPage extends React.Component {
         let stepMarkup
         if (step === 1) {
             stepMarkup = (
-                <div>
-                    <h3>Step 1/3. Sign in with Twitter</h3>
-                    <SignIn onSignIn={this.handleSignIn} />
+                <div className="creator__container">
+                    <div className="meter">
+                        <div
+                            className="meter__progress"
+                            style={{ width: '0%' }}
+                        />
+                    </div>
+                    <h3 className="step__header">
+                        Step 1/3: Create an account
+                    </h3>
+                    <p className="step__info">
+                        Sign in with Twitter so we can do all the heavy-lifting.
+                    </p>
+                    <SignIn
+                        onSignIn={this.handleSignIn}
+                        getUsername={this.handleGetUsername}
+                    />
                 </div>
             )
         } else if (step === 2) {
             stepMarkup = (
-                <div>
-                    <h3>Step 2/3. Set an amount</h3>
-                    <p>Choose a monthly amount to charge subscribers.</p>
+                <div className="creator__container">
+                    <div className="meter">
+                        <div
+                            className="meter__progress"
+                            style={{ width: '33.3%' }}
+                        />
+                    </div>
+                    <h3 className="step__header">Step 2/3: Set an amount</h3>
+                    <p className="step__info">
+                        Choose a monthly amount to charge subscribers.
+                    </p>
                     <input
+                        className="step__input"
                         value={amount}
                         type="number"
                         onChange={this.onChangeAmount}
                     />
-                    <button disabled={!amount} onClick={this.onClickSetAmount}>
+                    <button
+                        className="creator__button"
+                        disabled={!amount}
+                        onClick={this.onClickSetAmount}
+                    >
                         Continue
                     </button>
                 </div>
             )
         } else if (step === 3) {
             stepMarkup = (
-                <div>
-                    <h3>Step 3/3. Go private</h3>
-                    <p>
+                <div className="creator__container">
+                    <div className="meter">
+                        <div
+                            className="meter__progress"
+                            style={{ width: '66.6%' }}
+                        />
+                    </div>
+                    <h3 className="step__header">Step 3/3: Go private</h3>
+                    <p className="step__info">
                         Make your account private so only subscribers have
                         access by{' '}
                         <a
@@ -72,26 +105,39 @@ class CreatorPage extends React.Component {
                             rel="noopener noreferrer"
                             target="_blank"
                         >
-                            selecting "Protect Your Tweets"
+                            selecting Protect Your Tweets
                         </a>
-                        .
+                        .<br />
+                        <br />
+                        Once you've done that come back and select Finish.
                     </p>
 
-                    <img alt="goprivate" src={goprivate} />
+                    <img className="image" alt="goprivate" src={goprivate} />
 
-                    <p>Once you've done that come back and select Finish</p>
-                    <button onClick={this.onClickGoBack}>Back</button>
-                    <button onClick={this.onClickFinish}>Finish</button>
+                    <button
+                        className="creator__button"
+                        disabled={!amount}
+                        onClick={this.onClickFinish}
+                    >
+                        Finish
+                    </button>
                 </div>
             )
         } else {
             stepMarkup = (
                 <div>
-                    <h3>Congrats!</h3>
-                    <p>You can now make money from your tweets!</p>
-                    <p>
-                        Here's your unique subscription link:
-                        <Link to={`/${username}`}>
+                    <div className="meter">
+                        <div
+                            className="meter__progress"
+                            style={{ width: '100%' }}
+                        />
+                    </div>
+                    <h3 className="step__header">Congrats!</h3>
+                    <p className="step__info">
+                        You can now make money from your tweets! <br />
+                        <br />
+                        Here's your unique subscription link:{' '}
+                        <Link to={`/${username}`} className="dark">
                             https://paytweetb.firebaseapp.com/@
                             {username}
                         </Link>
@@ -100,7 +146,7 @@ class CreatorPage extends React.Component {
             )
         }
 
-        return <div>{stepMarkup}</div>
+        return <div className="creator">{stepMarkup}</div>
     }
 }
 
