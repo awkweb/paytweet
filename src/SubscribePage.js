@@ -13,9 +13,11 @@ class SubscribePage extends React.Component {
     constructor(props) {
         super(props)
 
-        api.getUserInfo(props.match.params.creatorUsername).then(response => {
-            this.setState({ user: response })
-        })
+        const username = api
+            .getUserInfo(props.match.params.creatorUsername)
+            .then(response => {
+                this.setState({ user: response })
+            })
 
         const paymentRequest = props.stripe.paymentRequest({
             country: 'US',
@@ -139,7 +141,7 @@ class SubscribePage extends React.Component {
         }
 
         if (!this.state.user) {
-            return <div>loading...</div>
+            return null
         }
 
         let stepMarkup
@@ -150,7 +152,9 @@ class SubscribePage extends React.Component {
                 <div>
                     {this.state.canMakePayment ? (
                         <div>
-                            <PaymentRequestButtonElement />
+                            <PaymentRequestButtonElement
+                                paymentRequest={this.state.paymentRequest}
+                            />
                             <p>Or, fill in details below:</p>
                         </div>
                     ) : null}
