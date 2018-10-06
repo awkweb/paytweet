@@ -201,3 +201,11 @@ html {
 .sub__button:hover {
     background-color: #E6ECF0;
 }
+
+.success {
+    font-size: 1.15rem;
+}
+
+.success a {
+    color: #006dbf;
+}

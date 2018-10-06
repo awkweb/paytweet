@@ -5,15 +5,11 @@ const cors = require("cors")({
   origin: process.env.NODE_ENV === "production" ? true : "*"
 });
 const Twitter = require("twitter");
-const { twitterKey, twitterSecret } = functions.config().twitter;
-const { stripeKey } = functions.config().stripe;
 
-exports.getUserInfo = functions.https.onRequest((request, response) => {
-  return cors(request, response, () => {
-    const {
-      query: { username }
-    } = request;
+const { key: twitterKey, secret: twitterSecret } = functions.config().twitter;
 
+const getUserInfo = username => {
+  return new Promise((resolve, reject) => {
     admin
       .database()
       .ref("users/")
@@ -26,8 +22,20 @@ exports.getUserInfo = functions.https.onRequest((request, response) => {
             userInfo = user;
           }
         });
-        response.status(200).send(userInfo);
+        resolve(userInfo);
       });
+  });
+};
+
+exports.getUserInfo = functions.https.onRequest((request, response) => {
+  return cors(request, response, () => {
+    const {
+      query: { username }
+    } = request;
+
+    getUserInfo(username).then(userInfo => {
+      response.status(200).send(userInfo);
+    });
   });
 });
 
@@ -40,6 +48,9 @@ exports.createPlan = functions.https.onRequest((request, response) => {
 });
 
 const follow = (subscriberId, creatorUsername) => {
+  console.log(
+    `Sending follow request from ${subscriberId} to ${creatorUsername}`
+  );
   return new Promise((resolve, reject) => {
     const subscriberUser = admin.database().ref(`users/${subscriberId}`);
     subscriberUser.once("value", snapshot => {
@@ -55,24 +66,24 @@ const follow = (subscriberId, creatorUsername) => {
       // Create friendship
       subscriberClient
         .post("friendships/create", {
-          user_id: creatorUsername
+          screen_name: creatorUsername
         })
         .then(response => {
-          console.log(response);
-          resolve(value.additionalInfo.username);
+          resolve(value.additionalUserInfo.username);
         })
         .catch(error => {
-          console.log(error);
+          reject(error);
         });
     });
   });
 };
 
 const dm = (subscriberUsername, creatorUsername) => {
+  console.log(`Sending DM from @paytweetbot to ${creatorUsername}`);
   return new Promise((resolve, reject) => {
     const botUser = admin.database().ref(`users/QJIx8y9VOeSMUQTubKwAxkuyhzE2`);
     botUser.once("value", snapshot => {
-      const value = snapshot.value();
+      const value = snapshot.val();
 
       const botClient = new Twitter({
         consumer_key: twitterKey,
@@ -81,24 +92,29 @@ const dm = (subscriberUsername, creatorUsername) => {
         access_token_secret: value.credential.secret
       });
 
-      // Send DM
-      botClient
-        .post("direct_messages/events/new", {
-          event: {
-            type: "message_create",
-            message_create: {
-              target: {
-                recipient_id: creatorUsername
-              },
-              message_data: {
-                text: `New subscriber! @${subscriberUsername} payed $5 to follow you. Click here to accept: https://twitter.com/follower_requests`
+      getUserInfo(creatorUsername).then(creatorInfo => {
+        // Send DM
+        botClient
+          .post("direct_messages/new", {
+            event: {
+              type: "message_create",
+              message_create: {
+                target: {
+                  recipient_id: creatorInfo.id
+                },
+                message_data: {
+                  text: `New subscriber! @${subscriberUsername} payed $5 to follow you. Click here to accept: https://twitter.com/follower_requests`
+                }
               }
             }
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+          })
+          .then(() => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     });
   });
 };
@@ -126,6 +142,9 @@ exports.subscribe = functions.https.onRequest((request, response) => {
         response.status(200).send({
           message: "subscribe success!"
         });
+      })
+      .catch(error => {
+        console.log(error);
       });
   });
 });

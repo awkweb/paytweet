@@ -13,11 +13,9 @@ class SubscribePage extends React.Component {
     constructor(props) {
         super(props)
 
-        const username = api
-            .getUserInfo(props.match.params.creatorUsername)
-            .then(response => {
-                this.setState({ user: response })
-            })
+        api.getUserInfo(props.match.params.creatorUsername).then(response => {
+            this.setState({ user: response })
+        })
 
         const paymentRequest = props.stripe.paymentRequest({
             country: 'US',
@@ -39,6 +37,7 @@ class SubscribePage extends React.Component {
             subscriptionSucceeded: false,
             canMakePayment: false,
             paymentRequest,
+            loading: false,
         }
     }
 
@@ -50,6 +49,7 @@ class SubscribePage extends React.Component {
 
     handleCardPayment = ev => {
         ev.preventDefault()
+        this.setState({ loading: true })
         this.props.stripe
             .createSource({ type: 'card' })
             .then(({ source, error }) => {
@@ -57,30 +57,12 @@ class SubscribePage extends React.Component {
                     console.log(error)
                 } else {
                     console.log('card source', source)
+                    this.setState({
+                        subscriptionSucceeded: true,
+                    })
                     api.subscribe({
                         source: source.id,
                         subscriber: firebase.auth().currentUser.uid,
-                        creator: this.props.match.params.creatorUsername,
-                    }).then(response => {
-                        this.setState({
-                            subscriptionSucceeded: true,
-                        })
-                    })
-                }
-            })
-    }
-
-    handleCardPayment = ev => {
-        ev.preventDefault()
-        this.props.stripe
-            .createSource({ type: 'card' })
-            .then(({ source, error }) => {
-                if (error) {
-                    console.log(error)
-                } else {
-                    console.log('card source', source)
-                    api.subscribe({
-                        source: source.id,
                         creator: this.props.match.params.creatorUsername,
                     }).then(response => {
                         this.setState({
@@ -113,7 +95,7 @@ class SubscribePage extends React.Component {
 
         return (
             <div>
-                <h1 className="sub__header">Subscribe to {username} tweets</h1>
+                <h1 className="sub__header">Subscribe to {username}</h1>
                 <div className="sub__flex">
                     <img
                         className="sub__image"
@@ -147,7 +129,7 @@ class SubscribePage extends React.Component {
         let stepMarkup
         if (!this.state.signedIn) {
             stepMarkup = <SignIn onSignIn={this.handleSignIn} />
-        } else {
+        } else if (!this.state.subscriptionSucceeded) {
             stepMarkup = (
                 <div>
                     {this.state.canMakePayment ? (
@@ -163,9 +145,22 @@ class SubscribePage extends React.Component {
                             <CardElement />
                         </div>
                         <button className="sub__button" type="submit">
-                            Subscribe Now
+                            {this.state.loading
+                                ? 'Subscribing...'
+                                : 'Subscribe Now'}
                         </button>
                     </form>
+                </div>
+            )
+        } else {
+            stepMarkup = (
+                <div className="success">
+                    Success! You can now access{' '}
+                    <a href={`https://twitter.com/${username}`}>
+                        {username}
+                        's
+                    </a>{' '}
+                    private tweets.
                 </div>
             )
         }

@@ -10,7 +10,7 @@ class HomePage extends React.Component {
                 </h1>
                 <p className="home__description">
                     Have subscribers pay you monthly for access to your tweets
-                    in two minutes.
+                    in less than two minutes.
                 </p>
                 <Link to={`/creator`} className="home__button">
                     Let's go!
